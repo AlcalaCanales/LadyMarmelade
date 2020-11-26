@@ -1,27 +1,52 @@
 class Pot {
-constructor(player) {
-    this.col = player.col;
-    this.row = player.row;
+    constructor(game, player) {
+        this.game = game
+        this.player = player
+        this.coor = undefined
+    }
+
+    getPotCoord(){
+        this.coor = [this.player.col, this.player.row];
+    }
+
+    drawPot(){
+        if (this.coor != undefined){
+            const potImage = new Image();
+            potImage.src = 'images/Marmalade.png';
+            potImage.addEventListener('load', () => {
+
+                this.game.context.drawImage(
+                    potImage,
+                    (this.coor[0] * 50)+5,
+                    (this.coor[1] *50)+5,
+                    40,
+                    40);
+            });
+        }else {
+            console.log('Pot not drawn')
+        }
+    
+    }
+
 }
-}
 
 
-
+/*
 function getPotCoord(player){
-    coor = [player.col, player.row]
+    this.coor = [player.col, player.row]
     return coor
 }
 
 function drawPot(coor){
     if (coor != undefined){
-        /*context.save();
-        context.fillStyle = 'coral';
-        context.fillRect(
-            (coor[0] * 50)+5, 
-            (coor[1] *50)+5,
-            40,
-            40,
-        )*/
+        //context.save();
+        //context.fillStyle = 'coral';
+        //context.fillRect(
+            //(coor[0] * 50)+5, 
+            //(coor[1] *50)+5,
+            //40,
+            //40,
+        //)
         const potImage = new Image();
         potImage.src = 'images/Marmalade.png';
         potImage.addEventListener('load', () => {
@@ -40,3 +65,5 @@ function drawPot(coor){
     }
 
 }
+
+*/

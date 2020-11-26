@@ -1,5 +1,6 @@
 class Character {
-    constructor(col, row) {
+    constructor(game, col, row) {
+      this.game = game
       this.col = col;
       this.row = row;
       this.direction = 'down';
@@ -29,8 +30,80 @@ class Character {
         this.col -= 1;
       }
     }
+
+    drawPlayer() {
+      this.playerImage = new Image();
+      this.playerImage.src = 'images/spritesheet-2.png';
+      switch (this.direction) {
+          case 'up':
+              this.playerImage.addEventListener('load', () => {
+                  this.game.context.drawImage(
+                      this.playerImage,
+                      4*36,
+                      4*36,
+                      50,
+                      50,
+                      this.col * 50, 
+                      this.row * 50,
+                      50,
+                      50);
+                  //console.log(playerOne.col, playerOne.row);
+              });
+              break;
+          case 'down':
+              this.playerImage.addEventListener('load', () => {
+                  this.game.context.drawImage(
+                      this.playerImage,
+                      4*36,
+                      0,
+                      50,
+                      50,
+                      this.col * 50, 
+                      this.row * 50,
+                      50,
+                      50);
+                  //console.log(playerOne.col, playerOne.row);
+              });
+              break;
+          case 'left':
+              this.playerImage.addEventListener('load', () => {
+                  this.game.context.drawImage(
+                      this.playerImage,
+                      4*36,
+                      48,
+                      50,
+                      50,
+                      this.col * 50, 
+                      this.row * 50,
+                      50,
+                      50);
+                  //console.log(playerOne.col, playerOne.row);
+              });
+              break;
+          case 'right':
+              this.playerImage.addEventListener('load', () => {
+                  this.game.context.drawImage(
+                      this.playerImage,
+                      4*36,
+                      96
+                      ,
+                      50,
+                      50,
+                      this.col * 50, 
+                      this.row * 50,
+                      50,
+                      50);
+                  //console.log(playerOne.col, playerOne.row);
+              });
+              break;
+      }
+      //playerImage.src = 'images/character-down.png';
+      //const ratio = playerImage.width / playerImage.height;
+  
+  }
 }
 
+/*
 function drawPlayer() {
     const playerOneImage = new Image();
     playerOneImage.src = 'images/spritesheet-2.png';
@@ -104,3 +177,4 @@ function drawPlayer() {
 
 
   
+*/
