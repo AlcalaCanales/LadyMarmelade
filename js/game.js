@@ -1,18 +1,17 @@
-
-
 class Game {
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         this.reset();
         this.setKeyBindings();
+        this.createVeggies();
         this.context.translate(50, 50); 
     }
 
     reset() {
         this.player = new Character(this, 0, 0);
         this.enemies = [];
-        this.vegetables = [];
+        this.veggies = [];
         this.score = 0;
         this.pot = new Pot(this, this.player)
     }
@@ -58,13 +57,32 @@ class Game {
             }
         }
     }
-    
 
+    createVeggies(){
+        for (let i=0; i<17; i++){
+            for (let j=0; j<13; j++){
+                if (i%2 ==0 || j%2 ==0){
+                    let veggie = new Veggie(this,i, j);
+                    this.veggies.push(veggie)
+                }
+            }
+        }
+        for (let veggie of this.veggies){
+            if ((veggie.col==0 && veggie.row==0) || (veggie.col==1 && veggie.row==0) || (veggie.col==0 && veggie.row==1)){
+                const indexOfVeggie = this.veggies.indexOf(veggie)
+                this.veggies.splice(indexOfVeggie, 1)
+            }
+        }
+        console.dir(this.veggies)
+    }
+    
     runLogic() {
         this.drawGrid();
         this.drawObstacles();
         this.player.drawPlayer();
-
+        for (let veggie of this.veggies) {
+            veggie.draw();
+        }
     }
 
     setKeyBindings() {
@@ -83,9 +101,7 @@ class Game {
                 this.player.moveDown();
                 break;
             }
-            this.drawGrid();
-            this.drawObstacles();
-            this.player.drawPlayer();
+            this.runLogic()
             this.pot.drawPot();
         
         });        
@@ -96,9 +112,7 @@ class Game {
                 this.pot.getPotCoord();
                 break;
             }
-            this.drawGrid();
-            this.drawObstacles();
-            this.player.drawPlayer();
+            this.runLogic()
             this.pot.drawPot();
         });
     }
