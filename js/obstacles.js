@@ -1,10 +1,10 @@
-class Obstacle {
+/*class Obstacle {
   constructor(col, row) {
     this.col = col;
     this.row = row;
   }
 }
-
+/*
 function drawObstacles(){
   context.save();
   context.fillStyle = 'grey';
@@ -20,7 +20,7 @@ function drawObstacles(){
           40,
         )
 
-        /*
+        
         obstacleImage.addEventListener('load', () => {
             context.drawImage(
               obstacleImage,
@@ -29,10 +29,12 @@ function drawObstacles(){
               40,
               40,
             )
-        });*/
+        });
       };
     };
   };
   context.restore();
 }
+
+*/
     
