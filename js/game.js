@@ -222,43 +222,44 @@ class Game {
   setKeyBindings() {
     window.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
-                  
         case 32:
-            this.pot.getPotCoord();
-            this.collisionPot();
-            break;
-        case 37:
-            if (this.player.collisionLeft == false) {
-                this.player.moveLeft();
-                this.player.collisionLeft == false;
-                break;
-            } else {
-                console.log('Cannot move');
-            }
-        case 38:
-            if (this.player.collisionUp == false) {
-                this.player.moveUp();
-                this.player.collisionUp == false;
-                break;
-            } else {
-                console.log('Cannot move');
-            }
-        case 39:
-            console.log('RIGHT!!');
-            if (this.player.collisionRight == false) {
-                this.player.moveRight();
-                break;
-            } else {
-                console.log('Cannot move');
-            }
-        case 40:
-            if (this.player.collisionDown == false) {
-                this.player.moveDown();
-                break;
-            } else {
-                console.log('Cannot move');
-            }
+          this.pot.getPotCoord();
+          this.collisionPot();
+          break;
 
+        case 37:
+          console.log('LEFT!!');
+
+          if (this.player.collisionLeft === false) {
+            this.player.moveLeft();
+            break;
+          }
+          break;
+        case 38:
+          console.log('UP!!');
+
+          if (this.player.collisionUp === false) {
+            this.player.moveUp();
+            break;
+          }
+          break;
+
+        case 39:
+          console.log('RIGHT!!');
+          if (this.player.collisionRight === false) {
+            this.player.moveRight();
+            break;
+          }
+          break;
+
+        case 40:
+          console.log('DOWN!!');
+
+          if (this.player.collisionDown === false) {
+            this.player.moveDown();
+            break;
+          }
+          break;
       }
 
       this.drawEverything();
