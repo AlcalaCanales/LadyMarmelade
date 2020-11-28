@@ -5,6 +5,7 @@ class Game {
         this.reset();
         this.setKeyBindings();
         this.createVeggies();
+        this.createEnemies();
 
 ;
         this.context.translate(50, 50); 
@@ -12,7 +13,8 @@ class Game {
 
     reset() {
         this.player = new Character(this, 0, 0);
-        this.enemies = [];
+        this.enemiesVertical = [];
+        this.enemiesHorizontal = [];
         this.veggies = [];
         this.score = 0;
         this.pot = new Pot(this, this.player)
@@ -64,30 +66,76 @@ class Game {
         for (let i=0; i<17; i++){
             for (let j=0; j<13; j++){
                 if (i%2 ==0 || j%2 ==0){
-                    if ((i==0 && j==0) || (i==1 && j==0) || (i==0 && j==1)){
-                        console.log("nothing happens")
-                    }else {
+                    if (!(
+                        (i==0 && j==0) || 
+                        (i==1 && j==0) || 
+                        (i==0 && j==1) || 
+                        //horizontal
+                        ((i>3&&i<7) && (j==2))||
+                        ((i>10 &&i<14) && (j==6))||
+                        ((i>8 &&i<12) && (j==10))||
+                        //vertical
+                        ((i==16) && (j>6 && j<10))||
+                        ((i==0) && (j>2 && j<6))||
+                        ((i==0) && (j>7 && j<11))||
+                        ((i==4) && (j>4 && j<8))||
+                        ((i==8) && (j>6 && j<10))
+                        ))
+                        {
                         let veggie = new Veggie(this,i, j);
                         this.veggies.push(veggie)
                     }
                 }
             }
         }
-        console.dir(this.veggies)
+        //console.dir(this.veggies)
+    }
+
+    createEnemies(){
+        let iVertical=[16,0,0,4,8];
+        let jVertical=[7,3,8,5,7];
+        let iHorizontal=[4,11,9];
+        let jHorizontal=[2,6,10];
+        for (let index=0; index<iVertical.length; index++){
+            let enemy = new Enemy (this,iVertical[index], jVertical[index]);
+            this.enemiesVertical.push(enemy)
+        }
+        for (let index=0; index<iHorizontal.length; index++){
+            let enemy = new Enemy (this,iHorizontal[index], jHorizontal[index]);
+            this.enemiesVertical.push(enemy)
+        }
     }
     
-    runLogic() {
+/*
+    loop() {
+        this.drawEverything();
+        if (this.active) {
+          window.requestAnimationFrame(() => {
+            this.loop();
+          });
+        } else {
+          screenPlayElement.style.display = 'none';
+          screenGameOverElement.style.display = 'initial';
+        }
+      }
+*/
+    drawEverything() {
         //console.log("x" + this.player.col + "y" + this.player.row)
         this.drawGrid();
         this.drawObstacles();
         this.player.drawPlayer();
+        //console.log("logic runs")
+        this.resetCollision();
         for (let veggie of this.veggies) {
             veggie.draw()
         }
-        //console.log("logic runs")
-        this.resetCollision
+        for (let enemy of this.enemiesVertical) {
+            enemy.draw()
+        }
+        for (let enemy of this.enemiesHorizontal) {
+            enemy.draw()
+        }
         this.collisionPlayerFruits();
-        this.collisionPotFruits();
     }
 
     collisionPlayerFruits(){
@@ -112,7 +160,8 @@ class Game {
         console.log("colision up is" + this.player.collisionUp)*/
     }
 
-    collisionPotFruits(){
+    collisionPot(){
+        //console.dir(this.veggies)
         for (let veggie of this.veggies) {
             if (
                 this.pot.col== veggie.col && this.pot.row-1==veggie.row || 
@@ -123,7 +172,35 @@ class Game {
                 this.veggies.splice(indexOfVeggie, 1);
             }
         }
+        for (let enemy of this.enemiesHorizontal) {
+            if (
+                this.pot.col== enemy.col && this.pot.row-1==enemy.row || 
+                this.pot.col== enemy.col && this.pot.row+1==enemy.row  || 
+                this.pot.col-1== enemy.col && this.pot.row==enemy.row || 
+                this.pot.col+1== enemy.col && this.pot.row==enemy.row){
+                const indexOfEnemy = this.enemiesHorizontal.indexOf(enemy);
+                this.enemiesHorizontal.splice(indexOfEnemy, 1);
+            }
+        }
+
+        for (let enemy of this.enemiesVertical) {
+            if (
+                this.pot.col== enemy.col && this.pot.row-1==enemy.row || 
+                this.pot.col== enemy.col && this.pot.row+1==enemy.row  || 
+                this.pot.col-1== enemy.col && this.pot.row==enemy.row || 
+                this.pot.col+1== enemy.col && this.pot.row==enemy.row){
+                const indexOfEnemy = this.enemiesVertical.indexOf(enemy);
+                this.enemiesVertical.splice(indexOfEnemy, 1);
+            }
+        }
+
+        //console.dir(this.veggies)
+        this.drawEverything();
+        this.pot.drawPot();
+        console.log("colisionPotFruits")
     }
+
+
 
     resetCollision(){
         this.player.collisionUp = false
@@ -168,7 +245,7 @@ class Game {
                     }
             }
 
-            this.runLogic()
+            this.drawEverything()
             this.pot.drawPot();
             this.resetCollision();
         
@@ -180,8 +257,7 @@ class Game {
                 this.pot.getPotCoord();
                 break;
             }
-            this.runLogic()
-            this.pot.drawPot();
+            this.collisionPot();
         });
     }
 
