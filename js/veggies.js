@@ -8,7 +8,6 @@ class Veggie {
       const veggieImage = new Image();
       veggieImage.src = 'images/Strawberry.png';
       veggieImage.addEventListener('load', () => {
-
           this.game.context.drawImage(
             veggieImage,
               (this.col * 50)+5,

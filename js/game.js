@@ -5,6 +5,8 @@ class Game {
         this.reset();
         this.setKeyBindings();
         this.createVeggies();
+
+;
         this.context.translate(50, 50); 
     }
 
@@ -62,47 +64,100 @@ class Game {
         for (let i=0; i<17; i++){
             for (let j=0; j<13; j++){
                 if (i%2 ==0 || j%2 ==0){
-                    let veggie = new Veggie(this,i, j);
-                    this.veggies.push(veggie)
+                    if ((i==0 && j==0) || (i==1 && j==0) || (i==0 && j==1)){
+                        console.log("nothing happens")
+                    }else {
+                        let veggie = new Veggie(this,i, j);
+                        this.veggies.push(veggie)
+                    }
                 }
-            }
-        }
-        for (let veggie of this.veggies){
-            if ((veggie.col==0 && veggie.row==0) || (veggie.col==1 && veggie.row==0) || (veggie.col==0 && veggie.row==1)){
-                const indexOfVeggie = this.veggies.indexOf(veggie)
-                this.veggies.splice(indexOfVeggie, 1)
             }
         }
         console.dir(this.veggies)
     }
     
     runLogic() {
+        //console.log("x" + this.player.col + "y" + this.player.row)
         this.drawGrid();
         this.drawObstacles();
         this.player.drawPlayer();
         for (let veggie of this.veggies) {
-            veggie.draw();
+            veggie.draw()
         }
+        //console.log("logic runs")
+        this.resetCollision
+        this.collisionPlayerFruits();
+    }
+
+    collisionPlayerFruits(){
+        for (let veggie of this.veggies) {
+            if (this.player.col== veggie.col && this.player.row-1==veggie.row){
+                this.player.collisionUp=true
+            }
+            if (this.player.col== veggie.col && this.player.row+1==veggie.row){
+                this.player.collisionDown=true
+            }
+            if (this.player.col-1== veggie.col && this.player.row==veggie.row){
+                this.player.collisionLeft=true
+            }
+            if (this.player.col+1== veggie.col && this.player.row==veggie.row){
+                this.player.collisionRight=true
+            }
+        }
+        console.log("colision left is" + this.player.collisionLeft)
+        console.log("colision rigth is" + this.player.collisionRight)
+        console.log("colision down is" + this.player.collisionDown)
+        console.log("colision up is" + this.player.collisionUp)
+    }
+
+    collisionPotFruits
+
+    resetCollision(){
+        this.player.collisionUp = false
+        this.player.collisionDown = false
+        this.player.collisionLeft = false
+        this.player.collisionRight = false
     }
 
     setKeyBindings() {
         window.addEventListener('keydown', (event) => {
             switch (event.keyCode) {
-            case 37:
-                this.player.moveLeft();
-                break;
-            case 38:
-                this.player.moveUp();
-                break;
-            case 39:
-                this.player.moveRight();
-                break;
-            case 40:
-                this.player.moveDown();
-                break;
+                case 37:
+                    if (this.player.collisionLeft == false){
+                        this.player.moveLeft();
+                        this.player.collisionLeft == false
+                        break;
+                    }else{
+                        console.log("Cannot move")
+                    }
+                case 38:
+                    if (this.player.collisionUp == false){
+                        this.player.moveUp();
+                        this.player.collisionUp == false
+                        break;
+                    }else{
+                        console.log("Cannot move")
+                    }
+                case 39:
+                    console.log("RIGHT!!")
+                    if (this.player.collisionRight == false){
+                        this.player.moveRight();
+                        break;
+                    }else{
+                        console.log("Cannot move")
+                    }
+                case 40:
+                    if (this.player.collisionDown == false){
+                        this.player.moveDown();
+                        break;
+                    }else{
+                        console.log("Cannot move")
+                    }
             }
+
             this.runLogic()
             this.pot.drawPot();
+            this.resetCollision();
         
         });        
         

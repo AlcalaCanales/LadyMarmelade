@@ -5,6 +5,10 @@ class Character {
       this.row = row;
       this.direction = 'down';
       this.score = 0;
+      this.collisionUp = false
+      this.collisionDown = false
+      this.collisionLeft = false
+      this.collisionRight = false
     }
     moveUp() {
       this.direction = 'up';
