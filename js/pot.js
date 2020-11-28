@@ -2,23 +2,24 @@ class Pot {
     constructor(game, player) {
         this.game = game
         this.player = player
-        this.coor = undefined
+        this.col = undefined
+        this.row = undefined
     }
 
     getPotCoord(){
-        this.coor = [this.player.col, this.player.row];
+        this.col = this.player.col
+        this.row = this.player.row;
     }
 
     drawPot(){
-        if (this.coor != undefined){
+        if (this.col != undefined ||this.row != undefined){
             const potImage = new Image();
             potImage.src = 'images/Marmalade.png';
             potImage.addEventListener('load', () => {
-
                 this.game.context.drawImage(
                     potImage,
-                    (this.coor[0] * 50)+5,
-                    (this.coor[1] *50)+5,
+                    (this.col * 50)+5,
+                    (this.row *50)+5,
                     40,
                     40);
             });

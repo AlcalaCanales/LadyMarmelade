@@ -87,6 +87,7 @@ class Game {
         //console.log("logic runs")
         this.resetCollision
         this.collisionPlayerFruits();
+        this.collisionPotFruits();
     }
 
     collisionPlayerFruits(){
@@ -104,13 +105,25 @@ class Game {
                 this.player.collisionRight=true
             }
         }
+        /*
         console.log("colision left is" + this.player.collisionLeft)
         console.log("colision rigth is" + this.player.collisionRight)
         console.log("colision down is" + this.player.collisionDown)
-        console.log("colision up is" + this.player.collisionUp)
+        console.log("colision up is" + this.player.collisionUp)*/
     }
 
-    collisionPotFruits
+    collisionPotFruits(){
+        for (let veggie of this.veggies) {
+            if (
+                this.pot.col== veggie.col && this.pot.row-1==veggie.row || 
+                this.pot.col== veggie.col && this.pot.row+1==veggie.row  || 
+                this.pot.col-1== veggie.col && this.pot.row==veggie.row || 
+                this.pot.col+1== veggie.col && this.pot.row==veggie.row){
+                const indexOfVeggie = this.veggies.indexOf(veggie);
+                this.veggies.splice(indexOfVeggie, 1);
+            }
+        }
+    }
 
     resetCollision(){
         this.player.collisionUp = false
