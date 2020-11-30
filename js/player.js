@@ -1,3 +1,6 @@
+this.playerImage = new Image();
+this.playerImage.src = 'images/spritesheet-2.png';
+
 class Character {
     constructor(game, col, row) {
       this.game = game
@@ -36,13 +39,13 @@ class Character {
     }
 
     drawPlayer() {
-      this.playerImage = new Image();
-      this.playerImage.src = 'images/spritesheet-2.png';
+      //this.playerImage = new Image();
+      //this.playerImage.src = 'images/spritesheet-2.png';
       switch (this.direction) {
           case 'up':
-              this.playerImage.addEventListener('load', () => {
+              //this.playerImage.addEventListener('load', () => {
                   this.game.context.drawImage(
-                      this.playerImage,
+                      playerImage,
                       4*36,
                       4*36,
                       50,
@@ -52,12 +55,12 @@ class Character {
                       50,
                       50);
                   //console.log(playerOne.col, playerOne.row);
-              });
+              //});
               break;
           case 'down':
-              this.playerImage.addEventListener('load', () => {
+              //this.playerImage.addEventListener('load', () => {
                   this.game.context.drawImage(
-                      this.playerImage,
+                      playerImage,
                       4*36,
                       0,
                       50,
@@ -67,12 +70,12 @@ class Character {
                       50,
                       50);
                   //console.log(playerOne.col, playerOne.row);
-              });
+              //});
               break;
           case 'left':
-              this.playerImage.addEventListener('load', () => {
+              //this.playerImage.addEventListener('load', () => {
                   this.game.context.drawImage(
-                      this.playerImage,
+                      playerImage,
                       4*36,
                       48,
                       50,
@@ -82,13 +85,13 @@ class Character {
                       50,
                       50);
                   //console.log(playerOne.col, playerOne.row);
-              });
+              //});
               break;
           case 'right':
-              this.playerImage.addEventListener('load', () => {
+              //this.playerImage.addEventListener('load', () => {
                   this.game.context.drawImage(
-                      this.playerImage,
-                      4*36,
+                      playerImage,
+                       4*36,
                       96
                       ,
                       50,
@@ -98,7 +101,7 @@ class Character {
                       50,
                       50);
                   //console.log(playerOne.col, playerOne.row);
-              });
+              //});
               break;
       }
       //playerImage.src = 'images/character-down.png';

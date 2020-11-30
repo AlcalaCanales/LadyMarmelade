@@ -28,7 +28,7 @@ triggerPlayAgainElement.addEventListener('click', () => {
   game.loop();
 });
 */
-game.drawEverything();
+game.loop();
 
 //drawGrid()
 //let playerOne = new Character(0, 0);

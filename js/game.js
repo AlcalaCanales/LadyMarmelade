@@ -1,3 +1,5 @@
+
+
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
@@ -7,7 +9,12 @@ class Game {
     this.createVeggies();
     this.createEnemies();
 
+    //Images
+    this.obstacleImage = new Image();
+    this.obstacleImage.src = 'images/obstacles.png';
+
     this.context.translate(50, 50);
+    this.active = true
   }
 
   reset() {
@@ -17,6 +24,7 @@ class Game {
     this.veggies = [];
     this.score = 0;
     this.pot = new Pot(this, this.player);
+    this.active = true
   }
 
   drawGrid() {
@@ -45,8 +53,8 @@ class Game {
   drawObstacles() {
     this.context.save();
     this.context.fillStyle = 'grey';
-    const obstacleImage = new Image();
-    obstacleImage.src = 'images/obstacles.png';
+    //const obstacleImage = new Image();
+    //obstacleImage.src = 'images/obstacles.png';
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 12; j++) {
         if (i % 2 != 0 && j % 2 != 0) {
@@ -92,14 +100,26 @@ class Game {
     let iHorizontal = [4, 11, 9];
     let jHorizontal = [2, 6, 10];
     for (let index = 0; index < iVertical.length; index++) {
-      let enemy = new Enemy(this, iVertical[index], jVertical[index]);
+      let enemy = new EnemyVertical(this, iVertical[index], jVertical[index]);
       this.enemiesVertical.push(enemy);
     }
     for (let index = 0; index < iHorizontal.length; index++) {
-      let enemy = new Enemy(this, iHorizontal[index], jHorizontal[index]);
+      let enemy = new EnemyHorizontal(this, iHorizontal[index], jHorizontal[index]);
       this.enemiesVertical.push(enemy);
     }
   }
+
+  loop(){
+    this.drawEverything();
+    if (this.active) {
+      setTimeout(() => {
+        this.loop();
+      }, 400);
+    } else{
+      console.log("game over")
+    }
+  }
+
   collisionPot() {
     //console.dir(this.veggies)
     for (let veggie of this.veggies) {
@@ -168,20 +188,28 @@ class Game {
     }
     for (let enemy of this.enemiesVertical) {
       enemy.draw();
-    }
+      enemy.checkCollision();
+      enemy.move();
+    } 
     for (let enemy of this.enemiesHorizontal) {
       enemy.draw();
+      enemy.checkCollision();
+      enemy.move();
     }
     this.collisionPlayerFruits();
     this.collisionPlayerEnemy();
-    this.pot.drawPot();
+    //this.pot.drawPot();
+  }
+
+  runLogic(){
+    
   }
 
   collisionPlayerEnemy() {
     for (let enemy of this.enemiesHorizontal) {
       if (this.player.col == enemy.col && this.player.row == enemy.row) {
         console.log('game over');
-      }
+      } 
     }
     for (let enemy of this.enemiesVertical) {
       if (this.player.col == enemy.col && this.player.row == enemy.row) {
@@ -217,6 +245,7 @@ class Game {
     this.player.collisionDown = false;
     this.player.collisionLeft = false;
     this.player.collisionRight = false;
+    
   }
 
   setKeyBindings() {
@@ -262,7 +291,7 @@ class Game {
           break;
       }
 
-      this.drawEverything();
+      //this.drawEverything();
     });
   }
 }

@@ -1,3 +1,6 @@
+const veggieImage = new Image();
+veggieImage.src = 'images/Strawberry.png';
+
 class Veggie {
     constructor(game,col,row) {
       this.game=game;
@@ -5,16 +8,16 @@ class Veggie {
       this.row=row;
     }
     draw () {
-      const veggieImage = new Image();
-      veggieImage.src = 'images/Strawberry.png';
-      veggieImage.addEventListener('load', () => {
+      //const veggieImage = new Image();
+      //veggieImage.src = 'images/Strawberry.png';
+      //veggieImage.addEventListener('load', () => {
           this.game.context.drawImage(
             veggieImage,
               (this.col * 50)+5,
               (this.row *50)+5,
               40,
               40);
-      });
+      //});
 
 
       /*
