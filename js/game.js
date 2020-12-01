@@ -158,9 +158,9 @@ class Game {
     }
 
     //console.dir(this.veggies)
-    this.drawEverything();
-    this.pot.drawPot();
-    console.log('colisionPotFruits');
+    //this.drawEverything();
+    //this.pot.drawPot();
+    //console.log('colisionPotFruits');
   }
 
   /*
@@ -183,6 +183,9 @@ class Game {
     this.player.drawPlayer();
     //console.log("logic runs")
     this.resetCollision();
+    if (this.pot.active==true){
+      this.pot.draw();
+    } 
     for (let veggie of this.veggies) {
       veggie.draw();
     }
@@ -196,6 +199,7 @@ class Game {
       enemy.checkCollision();
       enemy.move();
     }
+
     this.collisionPlayerFruits();
     this.collisionPlayerEnemy();
     //this.pot.drawPot();
@@ -252,8 +256,8 @@ class Game {
     window.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
         case 32:
-          this.pot.getPotCoord();
-          this.collisionPot();
+          this.pot.createPot();
+          //this.collisionPot(); 
           break;
 
         case 37:

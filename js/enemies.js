@@ -52,6 +52,15 @@ class EnemyHorizontal extends Enemy{
     }else if (this.col==16){
       this.collisionRight = true;
     }
+
+    if (this.col - 1 == this.game.pot.col && this.row == this.game.pot.row) {
+      this.collisionLeft = true;
+      //console.log("collision left")
+    }
+    if (this.col + 1 == this.game.pot.col && this.row == this.game.pot.row) {
+      this.collisionRight = true;
+      //console.log("collision right")
+    } 
   }
 
   resetCollision() {
@@ -116,6 +125,15 @@ class EnemyVertical extends Enemy{
       this.collisionUp = true;
     }else if (this.row==16){
       this.collisionDown = true;
+    }
+    if (this.game.pot.active){
+      if (this.col == this.game.pot.col && this.row - 1 == this.game.pot.row) {
+        this.collisionUp = true;
+        //console.log(veggie.col)
+      }
+      if (this.col == this.game.pot.col && this.row + 1 == this.game.pot.row) {
+        this.collisionDown = true;
+      }
     }
   }
 
