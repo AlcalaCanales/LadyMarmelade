@@ -100,13 +100,13 @@ class Game {
       for (let j = 0; j < 13; j++) {
         if (i % 2 == 0 || j % 2 == 0) {
           if (
-              (i == 10 && j == 2) ||
-              (i == 16 && j == 0) ||
-              (i == 0 && j == 12) ||
-              //vertical
-              (i == 2 && j == 2) ||
-              (i == 6 && j == 8) ||
-              (i == 0 && j == 12) 
+            (i == 10 && j == 2) ||
+            (i == 16 && j == 0) ||
+            (i == 0 && j == 12) ||
+            //vertical
+            (i == 2 && j == 2) ||
+            (i == 6 && j == 8) ||
+            (i == 0 && j == 12)
           ) {
             let bonus = new Bonus(this, i, j);
             this.boni.push(bonus);
@@ -150,14 +150,17 @@ class Game {
     }
   }
 
-
-  collisionBonus(){
+  collisionBonus() {
     for (let bonus of this.boni) {
-      if (this.player.col == bonus.col && this.player.row == bonus.row && bonus.active==true){
+      if (
+        this.player.col == bonus.col &&
+        this.player.row == bonus.row &&
+        bonus.active == true
+      ) {
         const indexOfBonus = this.boni.indexOf(bonus);
-        
-        this.pot.potRadius +=1
-        console.log("Bonus" + this.pot.potRadius)
+
+        this.pot.potRadius += 1;
+        console.log('Bonus' + this.pot.potRadius);
         bonus.active = false;
         //this.veggies.splice(indexOfVeggie, 1);
       }
@@ -183,13 +186,21 @@ class Game {
     for (let veggie of this.veggies) {
       if (
         //UP
-        (veggie.col == this.pot.col) && (veggie.row < this.pot.row && veggie.row >= this.pot.row - this.pot.potRadius) ||
+        (veggie.col == this.pot.col &&
+          veggie.row < this.pot.row &&
+          veggie.row >= this.pot.row - this.pot.potRadius) ||
         //DOWN
-        (veggie.col == this.pot.col) && (veggie.row > this.pot.row &&veggie.row <= this.pot.row + this.pot.potRadius) ||
+        (veggie.col == this.pot.col &&
+          veggie.row > this.pot.row &&
+          veggie.row <= this.pot.row + this.pot.potRadius) ||
         //LEFT
-        ((veggie.col < this.pot.col && veggie.col >= this.pot.col - this.pot.potRadius) && (this.pot.row == veggie.row)) ||
+        (veggie.col < this.pot.col &&
+          veggie.col >= this.pot.col - this.pot.potRadius &&
+          this.pot.row == veggie.row) ||
         //RIGHT
-        ((veggie.col > this.pot.col && veggie.col <= this.pot.col + this.pot.potRadius ) && (this.pot.row == veggie.row))
+        (veggie.col > this.pot.col &&
+          veggie.col <= this.pot.col + this.pot.potRadius &&
+          this.pot.row == veggie.row)
       ) {
         const indexOfVeggie = this.veggies.indexOf(veggie);
         //console.log(indexOfVeggie);
@@ -198,13 +209,31 @@ class Game {
         //this.veggies.splice(indexOfVeggie, 1);
       }
     }
-    
+
     for (let enemy of this.enemiesHorizontal) {
       if (
+        //UP
+        (enemy.col == this.pot.col &&
+          enemy.row < this.pot.row &&
+          enemy.row >= this.pot.row - this.pot.potRadius) ||
+        //DOWN
+        (enemy.col == this.pot.col &&
+          enemy.row > this.pot.row &&
+          enemy.row <= this.pot.row + this.pot.potRadius) ||
+        //LEFT
+        (enemy.col < this.pot.col &&
+          enemy.col >= this.pot.col - this.pot.potRadius &&
+          this.pot.row == enemy.row) ||
+        //RIGHT
+        (enemy.col > this.pot.col &&
+          enemy.col <= this.pot.col + this.pot.potRadius &&
+          this.pot.row == enemy.row)
+
+        /*
         (this.pot.col == enemy.col && this.pot.row - 1 == enemy.row) ||
         (this.pot.col == enemy.col && this.pot.row + 1 == enemy.row) ||
         (this.pot.col - 1 == enemy.col && this.pot.row == enemy.row) ||
-        (this.pot.col + 1 == enemy.col && this.pot.row == enemy.row)
+        (this.pot.col + 1 == enemy.col && this.pot.row == enemy.row)*/
       ) {
         const indexOfEnemy = this.enemiesHorizontal.indexOf(enemy);
         this.enemiesHorizontal.splice(indexOfEnemy, 1);
@@ -213,10 +242,28 @@ class Game {
 
     for (let enemy of this.enemiesVertical) {
       if (
+        (enemy.col == this.pot.col &&
+          enemy.row < this.pot.row &&
+          enemy.row >= this.pot.row - this.pot.potRadius) ||
+        //DOWN
+        (enemy.col == this.pot.col &&
+          enemy.row > this.pot.row &&
+          enemy.row <= this.pot.row + this.pot.potRadius) ||
+        //LEFT
+        (enemy.col < this.pot.col &&
+          enemy.col >= this.pot.col - this.pot.potRadius &&
+          this.pot.row == enemy.row) ||
+        //RIGHT
+        (enemy.col > this.pot.col &&
+          enemy.col <= this.pot.col + this.pot.potRadius &&
+          this.pot.row == enemy.row)
+
+
+        /*
         (this.pot.col == enemy.col && this.pot.row - 1 == enemy.row) ||
         (this.pot.col == enemy.col && this.pot.row + 1 == enemy.row) ||
         (this.pot.col - 1 == enemy.col && this.pot.row == enemy.row) ||
-        (this.pot.col + 1 == enemy.col && this.pot.row == enemy.row)
+        (this.pot.col + 1 == enemy.col && this.pot.row == enemy.row)*/
       ) {
         const indexOfEnemy = this.enemiesVertical.indexOf(enemy);
         this.enemiesVertical.splice(indexOfEnemy, 1);
@@ -263,8 +310,6 @@ class Game {
     for (let veggie of this.veggies) {
       veggie.draw();
     }
-
-
 
     for (let enemy of this.enemiesVertical) {
       enemy.draw();
