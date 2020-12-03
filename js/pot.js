@@ -17,6 +17,7 @@ class Pot {
     this.row = undefined;
     this.active = false;
     this.flamesActive = false;
+    this.potRadius = 1;
   }
 
   createPot() {
@@ -57,47 +58,47 @@ class Pot {
     this.game.context.fillStyle = 'coral';
     for (let col of index) {
       for (let row of index) {
-        if (col == -1 && row == 0 && this.col > 0) {
+        if (col == -1 && row == 0 && this.col-this.potRadius >= 0) {
           console.log(col);
           console.log(row);
           //this.game.context.fillRect(
           this.game.context.drawImage(
             flameLeftImage,
-            (this.col + -1) * 50,
+            (this.col - this.potRadius) * 50,
             (this.row + 0) * 50,
             50,
             50
           );
-        } else if (col == 1 && row == 0 && this.col < 16) {
+        } else if (col == 1 && row == 0 && this.col+this.potRadius <= 16) {
           console.log(col);
           console.log(row);
           //this.game.context.fillRect(
           this.game.context.drawImage(
             flameRightImage,
-            (this.col + 1) * 50,
+            (this.col + this.potRadius) * 50,
             (this.row + 0) * 50,
             50,
             50
           );
-        } else if (col == 0 && row == -1 && this.row > 0) {
+        } else if (col == 0 && row == -1 && this.row-this.potRadius >= 0) {
           console.log(col);
           console.log(row);
           //this.game.context.fillRect(
           this.game.context.drawImage(
             flameUpImage,
             (this.col + 0) * 50,
-            (this.row + -1) * 50,
+            (this.row -this.potRadius) * 50,
             50,
             50
           );
-        } else if (col == 0 && row == 1 && this.row < 12) {
+        } else if (col == 0 && row == 1 && this.row+this.potRadius <= 12) {
           console.log(this.col);
           console.log(this.row);
           //this.game.context.fillRect(
           this.game.context.drawImage(
             flameDownImage,
             (this.col + 0) * 50,
-            (this.row + 1) * 50,
+            (this.row + this.potRadius) * 50,
             50,
             50
           );

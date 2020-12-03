@@ -28,6 +28,7 @@ triggerPlayAgainElement.addEventListener('click', () => {
   game.loop();
 });
 */
+
 game.loop();
 
 //drawGrid()

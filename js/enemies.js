@@ -23,9 +23,6 @@ class Enemy {
 
     }
 
-
-
-
 }
 
 class EnemyHorizontal extends Enemy{
