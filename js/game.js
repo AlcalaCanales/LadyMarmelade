@@ -22,6 +22,7 @@ class Game {
     this.enemiesVertical = [];
     this.enemiesHorizontal = [];
     this.veggies = [];
+    this.flames = [];
     this.score = 0;
     this.pot = new Pot(this, this.player);
     this.active = true
@@ -109,6 +110,8 @@ class Game {
     }
   }
 
+
+
   loop(){
     this.drawEverything();
     if (this.active) {
@@ -123,14 +126,16 @@ class Game {
   collisionPot() {
     //console.dir(this.veggies)
     for (let veggie of this.veggies) {
-      if (
-        (this.pot.col == veggie.col && this.pot.row - 1 == veggie.row) ||
+      if ((this.pot.col == veggie.col && this.pot.row - 1 == veggie.row) ||
         (this.pot.col == veggie.col && this.pot.row + 1 == veggie.row) ||
         (this.pot.col - 1 == veggie.col && this.pot.row == veggie.row) ||
-        (this.pot.col + 1 == veggie.col && this.pot.row == veggie.row)
-      ) {
-        const indexOfVeggie = this.veggies.indexOf(veggie);
-        this.veggies.splice(indexOfVeggie, 1);
+        (this.pot.col + 1 == veggie.col && this.pot.row == veggie.row)) {
+          console.log("llego")
+          const indexOfVeggie = this.veggies.indexOf(veggie);
+          console.log(indexOfVeggie);
+          console.dir(this.veggies);
+          veggie.active=false
+          //this.veggies.splice(indexOfVeggie, 1);
       }
     }
     for (let enemy of this.enemiesHorizontal) {
@@ -186,6 +191,10 @@ class Game {
     if (this.pot.active==true){
       this.pot.draw();
     } 
+    if (this.pot.flamesActive==true){
+      this.pot.drawFlames();
+    } 
+
     for (let veggie of this.veggies) {
       veggie.draw();
     }
@@ -205,9 +214,11 @@ class Game {
     //this.pot.drawPot();
   }
 
+  /*
   runLogic(){
     
   }
+  */
 
   collisionPlayerEnemy() {
     for (let enemy of this.enemiesHorizontal) {
@@ -224,16 +235,16 @@ class Game {
 
   collisionPlayerFruits() {
     for (let veggie of this.veggies) {
-      if (this.player.col == veggie.col && this.player.row - 1 == veggie.row) {
+      if (this.player.col == veggie.col && this.player.row - 1 == veggie.row && veggie.active==true) {
         this.player.collisionUp = true;
       }
-      if (this.player.col == veggie.col && this.player.row + 1 == veggie.row) {
+      if (this.player.col == veggie.col && this.player.row + 1 == veggie.row && veggie.active==true) {
         this.player.collisionDown = true;
       }
-      if (this.player.col - 1 == veggie.col && this.player.row == veggie.row) {
+      if (this.player.col - 1 == veggie.col && this.player.row == veggie.row && veggie.active==true) {
         this.player.collisionLeft = true;
       }
-      if (this.player.col + 1 == veggie.col && this.player.row == veggie.row) {
+      if (this.player.col + 1 == veggie.col && this.player.row == veggie.row && veggie.active==true) {
         this.player.collisionRight = true;
       }
     }

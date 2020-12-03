@@ -38,13 +38,13 @@ class EnemyHorizontal extends Enemy{
 
   checkCollision(){
     for (let veggie of this.game.veggies){
-      if (this.col - 1 == veggie.col && this.row == veggie.row) {
+      if (this.col - 1 == veggie.col && this.row == veggie.row && veggie.active==true) {
         this.collisionLeft = true;
-        //console.log("collision left")
+        ////console.log("collision left")
       }
-      if (this.col + 1 == veggie.col && this.row == veggie.row) {
+      if (this.col + 1 == veggie.col && this.row == veggie.row && veggie.active==true) {
         this.collisionRight = true;
-        //console.log("collision right")
+        ////console.log("collision right")
       } 
     }
     if ( this.col== 0){
@@ -52,15 +52,17 @@ class EnemyHorizontal extends Enemy{
     }else if (this.col==16){
       this.collisionRight = true;
     }
+    if (this.game.pot.active){
 
-    if (this.col - 1 == this.game.pot.col && this.row == this.game.pot.row) {
-      this.collisionLeft = true;
-      //console.log("collision left")
+      if (this.col - 1 == this.game.pot.col && this.row == this.game.pot.row) {
+        this.collisionLeft = true;
+        ////console.log("collision left")
+      }
+      if (this.col + 1 == this.game.pot.col && this.row == this.game.pot.row) {
+        this.collisionRight = true;
+        ////console.log("collision right")
+      } 
     }
-    if (this.col + 1 == this.game.pot.col && this.row == this.game.pot.row) {
-      this.collisionRight = true;
-      //console.log("collision right")
-    } 
   }
 
   resetCollision() {
@@ -113,11 +115,11 @@ class EnemyVertical extends Enemy{
     //console.dir(this.game.veggies)
     
     for (let veggie of this.game.veggies){
-      if (this.col == veggie.col && this.row - 1 == veggie.row) {
+      if (this.col == veggie.col && this.row - 1 == veggie.row && veggie.active==true) {
         this.collisionUp = true;
-        //console.log(veggie.col)
+        ////console.log(veggie.col)
       }
-      if (this.col == veggie.col && this.row + 1 == veggie.row) {
+      if (this.col == veggie.col && this.row + 1 == veggie.row && veggie.active==true) {
         this.collisionDown = true;
       }
     }
@@ -129,7 +131,7 @@ class EnemyVertical extends Enemy{
     if (this.game.pot.active){
       if (this.col == this.game.pot.col && this.row - 1 == this.game.pot.row) {
         this.collisionUp = true;
-        //console.log(veggie.col)
+        ////console.log(veggie.col)
       }
       if (this.col == this.game.pot.col && this.row + 1 == this.game.pot.row) {
         this.collisionDown = true;
@@ -146,11 +148,11 @@ class EnemyVertical extends Enemy{
     if (this.collisionUp === false && this.direction=="up") {
       this.moveUp();
       this.resetCollision();
-      console.log("moving up")
+      //console.log("moving up")
     }else if (this.collisionUp === true && this.direction=="up") {
       this.direction="down";
       this.moveDown();
-      console.log("moving up")
+      //console.log("moving up")
       this.resetCollision()
     }else if (this.collisionDown === false && this.direction=="down") {
       this.moveDown();
