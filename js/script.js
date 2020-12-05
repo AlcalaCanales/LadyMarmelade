@@ -1,5 +1,48 @@
 const canvasElement = document.querySelector('canvas');
 
+const game = new Game(canvasElement);
+
+const triggerPlayElement = document.getElementById('trigger-play');
+const triggerPlayAgainElement = document.getElementById('play-again');
+const triggerPlayAgainWinElement = document.getElementById('play-again-win');
+
+const screenStartElement = document.getElementById('screen-start');
+const screenGameOverElement = document.getElementById('screen-game-over');
+const screenPlayElement = document.getElementById('screen-play');
+const screenWinElement = document.getElementById('win');
+
+triggerPlayElement.addEventListener('click', () => {
+  screenStartElement.style.display = 'none';
+  screenPlayElement.style.display = 'initial';
+
+  game.loop();
+});
+
+triggerPlayAgainElement.addEventListener('click', () => {
+  screenGameOverElement.style.display = 'none';
+  screenPlayElement.style.display = 'initial';
+  //const game = new Game(canvasElement);
+  game.reset();
+  game.loop();
+});
+
+triggerPlayAgainWinElement.addEventListener('click', () => {
+  screenGameOverElement.style.display = 'none';
+  screenPlayElement.style.display = 'initial';
+  //const game = new Game(canvasElement);
+  game.reset();
+  game.loop();
+});
+
+
+
+
+
+
+
+
+/*const canvasElement = document.querySelector('canvas');
+
 
 
 const game = new Game(canvasElement);
@@ -27,7 +70,7 @@ triggerPlayAgainElement.addEventListener('click', () => {
   game.reset();
   game.loop();
 });
-*/
+
 
 game.loop();
 

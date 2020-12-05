@@ -7,18 +7,22 @@ class Enemy {
       this.col = col;
       this.row = row;
       this.direction = 'down';
+      this.active = true;
     }
 
     draw () {
         //const enemyImage = new Image();
         //enemyImage.src = 'images/skull_01a.png';
         //enemyImage.addEventListener('load', () => {
+          if (this.active==true){
             this.game.context.drawImage(
                 enemyImage,
-                (this.col * 50)+5,
-                (this.row *50)+5,
-                40,
-                40);
+                (this.col * this.game.tile)+(this.game.tile/10),
+                (this.row *this.game.tile)+(this.game.tile/10),
+                ((this.game.tile/10)*8),
+                ((this.game.tile/10)*8),
+            )
+          }
         //});
 
     }

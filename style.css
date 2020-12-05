@@ -1,16 +1,25 @@
+html{
+  background-color: #302739;
+}
+
 body {
-  background-color: grey;
+  background:no-repeat center top url("images/background.png"); 
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
+  text-align: center;
 }
 
-canvas {
-  background-color: grey;
+h1 {
+  margin: 200px;
+  ;
 }
+
+
+
 
 button {
   border: 0;
