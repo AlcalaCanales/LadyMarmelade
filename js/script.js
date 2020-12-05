@@ -20,7 +20,9 @@ const playAgainWinButton = document.getElementById('play-again-win-button');
 playButton.addEventListener('click', () => {
   screenStart.style.display = 'none';
   screenPlay.style.display = 'initial';
+  game.reset()
   game.loop();
+
 });
 
 playAgainButton.addEventListener('click', () => {

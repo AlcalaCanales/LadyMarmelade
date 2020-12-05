@@ -32,9 +32,7 @@ const scoreImage = new Image();
 scoreImage.src = 'images/pot_score.png';
 
 const playSound = new Audio('sounds/play.mp3');
-playSound.muted = true;
-playSound.volume = 0.01;
-playSound.loop = true;
+
 
 const winSound = new Audio('sounds/win.mp3');
 winSound.volume = 0.01;
@@ -50,7 +48,6 @@ class Game {
     this.context = canvas.getContext('2d');
     this.active = true;
     this.win = false;
-    this.reset();
     this.setKeyBindings();
     this.context.translate(50, 50);
     this.tile = 60;
@@ -60,6 +57,8 @@ class Game {
 
   reset() {
     playSound.play();
+    playSound.volume = 0.01;
+    playSound.loop = true;
     winSound.pause();
     loseSound.pause();
     this.active = true;
