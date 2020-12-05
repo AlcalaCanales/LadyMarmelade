@@ -9,6 +9,9 @@ flameRightImage.src = 'images/flameRight.png';
 const flameLeftImage = new Image();
 flameLeftImage.src = 'images/flameLeft.png';
 
+const explodeSound = new Audio('sounds/bang.mp3');
+
+
 class Pot {
   constructor(game, player) {
     this.game = game;
@@ -29,11 +32,16 @@ class Pot {
       setTimeout(() => {
         this.flamesActive = true;
       }, 1200);
-
       setTimeout(() => {
+        if (this.game.active == true){
+         explodeSound.play();
+        }
+      }, 1200);
+      setTimeout(() => {
+        explodeSound.play();
+        this.game.collisionPot();
         this.active = false;
         this.flamesActive = false;
-        this.game.collisionPot();
       }, 1500);
     }
   }

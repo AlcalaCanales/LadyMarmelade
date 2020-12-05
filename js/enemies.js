@@ -50,7 +50,7 @@ class EnemyHorizontal extends Enemy{
     }
     if ( this.col== 0){
       this.collisionLeft = true;
-    }else if (this.col==16){
+    }else if (this.col==this.game.cols-1){
       this.collisionRight = true;
     }
     if (this.game.pot.active){
@@ -73,17 +73,21 @@ class EnemyHorizontal extends Enemy{
 
   move(){
     if (this.collisionLeft === false && this.direction=="left") {
+      this.checkCollision()
       this.moveLeft();
       this.resetCollision()
     }else if (this.collisionLeft === true && this.direction=="left") {
       this.direction="right";
+      this.checkCollision()
       this.moveRight();
       this.resetCollision()
     }else if (this.collisionRight === false && this.direction=="right") {
+      this.checkCollision()
       this.moveRight();
       this.resetCollision()
     }else if (this.collisionRight === true && this.direction=="right") {
       this.direction="left";
+      this.checkCollision()
       this.moveLeft();
       this.resetCollision()
     }
@@ -91,7 +95,7 @@ class EnemyHorizontal extends Enemy{
   }
 
   moveRight() {
-    if (this.col < 16 && ((this.col+1)%2 ==0 || this.row%2 == 0)) {
+    if (this.col < this.game.cols-1 && ((this.col+1)%2 ==0 || this.row%2 == 0)) {
       this.col += 1;
     }
   }
@@ -126,7 +130,7 @@ class EnemyVertical extends Enemy{
     }
     if ( this.row== 0){
       this.collisionUp = true;
-    }else if (this.row==16){
+    }else if (this.row==this.game.rows-1){
       this.collisionDown = true;
     }
     if (this.game.pot.active){
@@ -147,18 +151,22 @@ class EnemyVertical extends Enemy{
 
   move(){
     if (this.collisionUp === false && this.direction=="up") {
+      this.checkCollision()
       this.moveUp();
       this.resetCollision();
       //console.log("moving up")
     }else if (this.collisionUp === true && this.direction=="up") {
+      this.checkCollision()
       this.direction="down";
       this.moveDown();
       //console.log("moving up")
       this.resetCollision()
     }else if (this.collisionDown === false && this.direction=="down") {
+      this.checkCollision()
       this.moveDown();
       this.resetCollision()
     }else if (this.collisionDown === true && this.direction=="down") {
+      this.checkCollision()
       this.direction="up";
       this.moveUp();
       this.resetCollision()
@@ -173,7 +181,7 @@ class EnemyVertical extends Enemy{
   }
 
   moveDown() {
-    if (this.row < 12 && ((this.row-+1)%2 == 0||this.col%2 == 0)) {
+    if (this.row < this.game.rows-1 && ((this.row-+1)%2 == 0||this.col%2 == 0)) {
       this.row += 1;
     }
   }

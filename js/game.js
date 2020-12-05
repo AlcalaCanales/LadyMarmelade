@@ -31,21 +31,40 @@ backgroundImageCornerDownRight.src = 'images/back_down_right.png';
 const scoreImage = new Image ();
 scoreImage.src = 'images/pot_score.png'
 
+const playSound = new Audio('sounds/play.mp3');
+playSound.autoplay = true
+playSound.volume = 0.5
+playSound.loop = true
+
+const winSound = new Audio('sounds/win.mp3');
+winSound.volume = 0.5
+winSound.loop = true
+
+const loseSound = new Audio('sounds/lose.mp3');
+winSound.volume = 0.5
+loseSound.loop = true
+
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
+    this.active = true;
+    this.win = false
     this.reset();
     this.setKeyBindings();
+
     this.context.translate(50, 50);
     this.tile = 60;
     this.rows = 13;
     this.cols = 17;
-    this.win = false
   }
 
   reset() {
+    winSound.pause();
+    loseSound.pause();
+    playSound.play();
     this.active = true;
+    this.win = false
     this.player = new Character(this, 0, 0);
     this.enemiesVertical = [];
     this.enemiesHorizontal = [];
@@ -57,8 +76,10 @@ class Game {
     this.moveEnemyStamp = 0;
     this.score = 0;
     this.pot = new Pot(this, this.player);
-    this.active = true;
+    
   }
+
+
 
   drawGrid() {
     this.context.save();
@@ -179,10 +200,14 @@ class Game {
       /*setTimeout(() => {
         this.loop();
       }, 400);*/
-    } else if (this.active == true && this.win== true) {
+    } else if (this.active == false && this.win== true) {
+      playSound.pause();
+      winSound.play();
       screenPlayElement.style.display = 'none';
       screenWinElement.style.display = 'initial';
     } else {
+      playSound.pause();
+      loseSound.play();
       screenPlayElement.style.display = 'none';
       screenGameOverElement.style.display = 'initial';
     }
@@ -239,22 +264,27 @@ class Game {
     }
 
     for (let enemy of this.enemiesVertical) {
-      enemy.draw();
       enemy.checkCollision();
+      enemy.draw();
+
     }
     for (let enemy of this.enemiesHorizontal) {
-      enemy.draw();
       enemy.checkCollision();
+      enemy.draw();
+
     }
 
     const currentTimeStamp = Date.now();
     if (currentTimeStamp > this.moveEnemyStamp + 400) {
       for (let enemy of this.enemiesVertical) {
+        //enemy.checkCollision();
         enemy.move();
+        //enemy.checkCollision();
       }
       for (let enemy of this.enemiesHorizontal) {
-        enemy.checkCollision();
+        //enemy.checkCollision();
         enemy.move();
+        //enemy.checkCollision();
       }
       this.moveEnemyStamp = currentTimeStamp;
     }
@@ -266,17 +296,23 @@ class Game {
   }
 
   drawScore(){
-    let scorePart = 405/146
+    let imageRatio = 400/650;
+    let showWidth = (this.tile*this.rows)*imageRatio;
+    let showHeight =this.tile*this.rows
+    let changeRatio = showWidth/scoreImage.width;
+    let scorePart = (405*changeRatio)/146
     let gettingFull = this.score * scorePart
     this.context.fillStyle = 'white';
-    this.context.fillRect(this.tile*this.cols + 52, this.tile*this.rows - (600-125), 396 , 405);
+    this.context.fillRect(this.tile*this.cols + 55, 5, showWidth-10 , showHeight-10);
     this.context.fillStyle = '#f22b4d';
-    this.context.fillRect(this.tile*this.cols + 52, this.tile*this.rows - (70 + gettingFull), 396 , gettingFull);
-    
+    this.context.fillRect(this.tile*this.cols + 55, this.tile*this.rows - ((70*changeRatio) + gettingFull), (396*changeRatio) , gettingFull);
+
     this.context.drawImage(
       scoreImage,
       this.tile*this.cols + 50,
-      this.tile*this.rows - 900,  
+      0,  
+      showWidth,
+      showHeight
     )
     
   }
@@ -432,11 +468,11 @@ class Game {
       if (
         //UP
         (enemy.col == this.pot.col &&
-          enemy.row < this.pot.row &&
+          enemy.row <= this.pot.row &&
           enemy.row >= this.pot.row - this.pot.potRadius) ||
         //DOWN
         (enemy.col == this.pot.col &&
-          enemy.row > this.pot.row &&
+          enemy.row >= this.pot.row &&
           enemy.row <= this.pot.row + this.pot.potRadius) ||
         //LEFT
         (enemy.col < this.pot.col &&
