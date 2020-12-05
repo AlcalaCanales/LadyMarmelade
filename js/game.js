@@ -195,7 +195,7 @@ class Game {
       /*setTimeout(() => {
         this.loop();
       }, 400);*/
-    } else if (this.active == false && this.win == true) {
+    } else if (this.active == true && this.win == true) {
       playSound.pause();
       winSound.play();
       screenPlay.style.display = 'none';
