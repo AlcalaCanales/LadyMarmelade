@@ -33,15 +33,15 @@ scoreImage.src = 'images/pot_score.png'
 
 const playSound = new Audio('sounds/play.mp3');
 playSound.autoplay = true
-playSound.volume = 0.5
+playSound.volume = 0.1
 playSound.loop = true
 
 const winSound = new Audio('sounds/win.mp3');
-winSound.volume = 0.5
+winSound.volume = 0.1
 winSound.loop = true
 
 const loseSound = new Audio('sounds/lose.mp3');
-winSound.volume = 0.5
+winSound.volume = 0.1
 loseSound.loop = true
 
 class Game {
