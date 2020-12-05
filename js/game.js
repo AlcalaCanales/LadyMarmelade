@@ -28,31 +28,30 @@ backgroundImageCornerDownLeft.src = 'images/back_down_left.png';
 const backgroundImageCornerDownRight = new Image();
 backgroundImageCornerDownRight.src = 'images/back_down_right.png';
 
-const scoreImage = new Image ();
-scoreImage.src = 'images/pot_score.png'
+const scoreImage = new Image();
+scoreImage.src = 'images/pot_score.png';
 
 const playSound = new Audio('sounds/play.mp3');
-playSound.autoplay = true
-playSound.volume = 0.1
-playSound.loop = true
+playSound.autoplay = true;
+playSound.volume = 0.01;
+playSound.loop = true;
 
 const winSound = new Audio('sounds/win.mp3');
-winSound.volume = 0.1
-winSound.loop = true
+winSound.volume = 0.01;
+winSound.loop = true;
 
 const loseSound = new Audio('sounds/lose.mp3');
-winSound.volume = 0.1
-loseSound.loop = true
+loseSound.volume = 0.01;
+loseSound.loop = true;
 
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
     this.active = true;
-    this.win = false
+    this.win = false;
     this.reset();
     this.setKeyBindings();
-
     this.context.translate(50, 50);
     this.tile = 60;
     this.rows = 13;
@@ -62,9 +61,8 @@ class Game {
   reset() {
     winSound.pause();
     loseSound.pause();
-    playSound.play();
     this.active = true;
-    this.win = false
+    this.win = false;
     this.player = new Character(this, 0, 0);
     this.enemiesVertical = [];
     this.enemiesHorizontal = [];
@@ -76,10 +74,7 @@ class Game {
     this.moveEnemyStamp = 0;
     this.score = 0;
     this.pot = new Pot(this, this.player);
-    
   }
-
-
 
   drawGrid() {
     this.context.save();
@@ -193,14 +188,14 @@ class Game {
 
   loop() {
     this.drawEverything();
-    if (this.active == true && this.win== false) {
+    if (this.active == true && this.win == false) {
       window.requestAnimationFrame(() => {
         this.loop();
       });
       /*setTimeout(() => {
         this.loop();
       }, 400);*/
-    } else if (this.active == false && this.win== true) {
+    } else if (this.active == false && this.win == true) {
       playSound.pause();
       winSound.play();
       screenPlayElement.style.display = 'none';
@@ -266,12 +261,10 @@ class Game {
     for (let enemy of this.enemiesVertical) {
       enemy.checkCollision();
       enemy.draw();
-
     }
     for (let enemy of this.enemiesHorizontal) {
       enemy.checkCollision();
       enemy.draw();
-
     }
 
     const currentTimeStamp = Date.now();
@@ -295,26 +288,35 @@ class Game {
     //this.pot.drawPot();
   }
 
-  drawScore(){
-    let imageRatio = 400/650;
-    let showWidth = (this.tile*this.rows)*imageRatio;
-    let showHeight =this.tile*this.rows
-    let changeRatio = showWidth/scoreImage.width;
-    let scorePart = (405*changeRatio)/146
-    let gettingFull = this.score * scorePart
+  drawScore() {
+    let imageRatio = 400 / 650;
+    let showWidth = this.tile * this.rows * imageRatio;
+    let showHeight = this.tile * this.rows;
+    let changeRatio = showWidth / scoreImage.width;
+    let scorePart = (405 * changeRatio) / 146;
+    let gettingFull = this.score * scorePart;
     this.context.fillStyle = 'white';
-    this.context.fillRect(this.tile*this.cols + 55, 5, showWidth-10 , showHeight-10);
+    this.context.fillRect(
+      this.tile * this.cols + 55,
+      5,
+      showWidth - 10,
+      showHeight - 10
+    );
     this.context.fillStyle = '#f22b4d';
-    this.context.fillRect(this.tile*this.cols + 55, this.tile*this.rows - ((70*changeRatio) + gettingFull), (396*changeRatio) , gettingFull);
+    this.context.fillRect(
+      this.tile * this.cols + 55,
+      this.tile * this.rows - (70 * changeRatio + gettingFull),
+      396 * changeRatio,
+      gettingFull
+    );
 
     this.context.drawImage(
       scoreImage,
-      this.tile*this.cols + 50,
-      0,  
+      this.tile * this.cols + 50,
+      0,
       showWidth,
       showHeight
-    )
-    
+    );
   }
 
   createVeggies() {
@@ -344,7 +346,7 @@ class Game {
         }
       }
     }
-    console.dir(this.veggies)
+    console.dir(this.veggies);
   }
 
   createEnemies() {
@@ -448,7 +450,7 @@ class Game {
           this.pot.row == veggie.row)
       ) {
         //const indexOfVeggie = this.veggies.indexOf(veggie);
-        if (veggie.active ==true){
+        if (veggie.active == true) {
           veggie.active = false;
           this.score += 1;
         }
@@ -460,8 +462,8 @@ class Game {
     });
     console.dir(veggiesActive);
     console.log(veggiesActive.length);
-    if (veggiesActive==0){
-      this.win = true
+    if (veggiesActive == 0) {
+      this.win = true;
     }
 
     for (let enemy of this.enemiesHorizontal) {
@@ -524,9 +526,9 @@ class Game {
     }
     for (let enemy of this.enemiesVertical) {
       if (
-        (this.player.col == enemy.col &&
+        this.player.col == enemy.col &&
         this.player.row == enemy.row &&
-        enemy.active == true)
+        enemy.active == true
       ) {
         this.active = false;
       }

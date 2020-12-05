@@ -10,7 +10,7 @@ const flameLeftImage = new Image();
 flameLeftImage.src = 'images/flameLeft.png';
 
 const explodeSound = new Audio('sounds/bang.mp3');
-explodeSound.volume = 0.3
+explodeSound.volume = 0.01
 
 class Pot {
   constructor(game, player) {
