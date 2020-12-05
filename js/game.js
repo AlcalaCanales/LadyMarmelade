@@ -38,7 +38,7 @@ class Game {
     this.reset();
     this.setKeyBindings();
     this.context.translate(50, 50);
-    this.tile = 50;
+    this.tile = 60;
     this.rows = 13;
     this.cols = 17;
     this.win = false

@@ -3,7 +3,7 @@ html{
 }
 
 body {
-  background:no-repeat center top url("images/background.png"); 
+  
   margin: 0;
   height: 100vh;
   display: flex;
