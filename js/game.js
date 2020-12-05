@@ -32,7 +32,7 @@ const scoreImage = new Image();
 scoreImage.src = 'images/pot_score.png';
 
 const playSound = new Audio('sounds/play.mp3');
-playSound.autoplay = true;
+//playSound.autoplay = true;
 playSound.volume = 0.01;
 playSound.loop = true;
 
