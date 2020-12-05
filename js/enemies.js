@@ -73,23 +73,25 @@ class EnemyHorizontal extends Enemy{
 
   move(){
     if (this.collisionLeft === false && this.direction=="left") {
-      this.checkCollision()
       this.moveLeft();
       this.resetCollision()
     }else if (this.collisionLeft === true && this.direction=="left") {
       this.direction="right";
-      this.checkCollision()
-      this.moveRight();
-      this.resetCollision()
+      this.checkCollision();
+      if (this.collisionRight != true){
+        this.moveRight();
+        this.resetCollision()
+      }
     }else if (this.collisionRight === false && this.direction=="right") {
-      this.checkCollision()
       this.moveRight();
       this.resetCollision()
     }else if (this.collisionRight === true && this.direction=="right") {
       this.direction="left";
-      this.checkCollision()
-      this.moveLeft();
-      this.resetCollision()
+      this.checkCollision();
+      if (this.collisionLeft != true){
+        this.moveLeft();
+        this.resetCollision()
+      }
     }
     
   }
@@ -151,14 +153,16 @@ class EnemyVertical extends Enemy{
 
   move(){
     if (this.collisionUp === false && this.direction=="up") {
-      this.checkCollision()
       this.moveUp();
       this.resetCollision();
       //console.log("moving up")
     }else if (this.collisionUp === true && this.direction=="up") {
-      this.checkCollision()
       this.direction="down";
-      this.moveDown();
+      this.checkCollision();
+      if (this.collisionDown != true){
+        this.moveDown();
+        this.resetCollision()
+      }
       //console.log("moving up")
       this.resetCollision()
     }else if (this.collisionDown === false && this.direction=="down") {
@@ -166,10 +170,11 @@ class EnemyVertical extends Enemy{
       this.moveDown();
       this.resetCollision()
     }else if (this.collisionDown === true && this.direction=="down") {
-      this.checkCollision()
       this.direction="up";
-      this.moveUp();
-      this.resetCollision()
+      this.checkCollision();
+      if (this.collisionUp != true)
+        this.moveUp();
+        this.resetCollision()
     }
     
   }

@@ -2,33 +2,38 @@ const canvasElement = document.querySelector('canvas');
 
 const game = new Game(canvasElement);
 
-const triggerPlayElement = document.getElementById('trigger-play');
-const triggerPlayAgainElement = document.getElementById('play-again');
-const triggerPlayAgainWinElement = document.getElementById('play-again-win');
 
-const screenStartElement = document.getElementById('screen-start');
-const screenGameOverElement = document.getElementById('screen-game-over');
-const screenPlayElement = document.getElementById('screen-play');
-const screenWinElement = document.getElementById('win');
+//different screens
+const screenStart = document.getElementById('start');
+const screenGameOver = document.getElementById('game-over');
+const screenPlay = document.getElementById('play');
+const screenWin = document.getElementById('win');
 
-triggerPlayElement.addEventListener('click', () => {
-  screenStartElement.style.display = 'none';
-  screenPlayElement.style.display = 'initial';
 
+//
+const playButton = document.getElementById('play-button');
+const playAgainButton = document.getElementById('play-again-button');
+const playAgainWinButton = document.getElementById('play-again-win-button');
+
+
+
+playButton.addEventListener('click', () => {
+  screenStart.style.display = 'none';
+  screenPlay.style.display = 'initial';
   game.loop();
 });
 
-triggerPlayAgainElement.addEventListener('click', () => {
-  screenGameOverElement.style.display = 'none';
-  screenPlayElement.style.display = 'initial';
+playAgainButton.addEventListener('click', () => {
+  screenGameOver.style.display = 'none';
+  screenPlay.style.display = 'initial';
   //const game = new Game(canvasElement);
   game.reset();
   game.loop();
 });
 
-triggerPlayAgainWinElement.addEventListener('click', () => {
-  screenGameOverElement.style.display = 'none';
-  screenPlayElement.style.display = 'initial';
+playAgainWinButton.addEventListener('click', () => {
+  screenWin.style.display = 'none';
+  screenPlay.style.display = 'initial';
   //const game = new Game(canvasElement);
   game.reset();
   game.loop();

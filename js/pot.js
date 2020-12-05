@@ -29,14 +29,23 @@ class Pot {
       this.col = this.player.col;
       this.row = this.player.row;
       this.active = true;
-      setTimeout(() => {
-        this.flamesActive = true;
-      }, 1200);
+
       setTimeout(() => {
         if (this.game.active == true){
          explodeSound.play();
         }
       }, 1200);
+
+      setTimeout(() => {
+        this.flamesActive = true;
+        setTimeout(() => {
+          explodeSound.play();
+          this.game.collisionPot();
+          this.active = false;
+          this.flamesActive = false;
+        }, 300);
+      }, 1350);
+      
       setTimeout(() => {
         explodeSound.play();
         this.game.collisionPot();

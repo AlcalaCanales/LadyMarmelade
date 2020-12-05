@@ -32,7 +32,7 @@ const scoreImage = new Image();
 scoreImage.src = 'images/pot_score.png';
 
 const playSound = new Audio('sounds/play.mp3');
-//playSound.autoplay = true;
+playSound.muted = true;
 playSound.volume = 0.01;
 playSound.loop = true;
 
@@ -52,7 +52,6 @@ class Game {
     this.win = false;
     this.reset();
     this.setKeyBindings();
-    playSound.play()
     this.context.translate(50, 50);
     this.tile = 60;
     this.rows = 13;
@@ -60,6 +59,7 @@ class Game {
   }
 
   reset() {
+    playSound.play();
     winSound.pause();
     loseSound.pause();
     this.active = true;
@@ -199,13 +199,13 @@ class Game {
     } else if (this.active == false && this.win == true) {
       playSound.pause();
       winSound.play();
-      screenPlayElement.style.display = 'none';
-      screenWinElement.style.display = 'initial';
+      screenPlay.style.display = 'none';
+      screenWin.style.display = 'initial';
     } else {
       playSound.pause();
       loseSound.play();
-      screenPlayElement.style.display = 'none';
-      screenGameOverElement.style.display = 'initial';
+      screenPlay.style.display = 'none';
+      screenGameOver.style.display = 'initial';
     }
   }
 
@@ -259,29 +259,33 @@ class Game {
       veggie.draw();
     }
 
+    const currentTimeStamp = Date.now();
+    if (currentTimeStamp > this.moveEnemyStamp + 400) {
+      for (let enemy of this.enemiesVertical) {
+        enemy.checkCollision();
+        enemy.move();
+        enemy.checkCollision();
+      }
+      for (let enemy of this.enemiesHorizontal) {
+        enemy.checkCollision();
+        enemy.move();
+        enemy.checkCollision();
+      }
+      this.moveEnemyStamp = currentTimeStamp;
+    }
+
     for (let enemy of this.enemiesVertical) {
       enemy.checkCollision();
       enemy.draw();
+      enemy.checkCollision();
     }
     for (let enemy of this.enemiesHorizontal) {
       enemy.checkCollision();
       enemy.draw();
+      enemy.checkCollision();
     }
 
-    const currentTimeStamp = Date.now();
-    if (currentTimeStamp > this.moveEnemyStamp + 400) {
-      for (let enemy of this.enemiesVertical) {
-        //enemy.checkCollision();
-        enemy.move();
-        //enemy.checkCollision();
-      }
-      for (let enemy of this.enemiesHorizontal) {
-        //enemy.checkCollision();
-        enemy.move();
-        //enemy.checkCollision();
-      }
-      this.moveEnemyStamp = currentTimeStamp;
-    }
+
 
     this.collisionPlayerFruits();
     this.collisionPlayerEnemy();
