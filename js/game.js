@@ -31,7 +31,10 @@ backgroundImageCornerDownRight.src = 'images/back_down_right.png';
 const scoreImage = new Image();
 scoreImage.src = 'images/pot_score.png';
 
+const coinSound = new Audio('sounds/coin.wav');
+coinSound.volume = 0.01;
 const playSound = new Audio('sounds/play.mp3');
+
 
 
 const winSound = new Audio('sounds/win.mp3');
@@ -401,7 +404,7 @@ class Game {
         bonus.active == true
       ) {
         const indexOfBonus = this.boni.indexOf(bonus);
-
+        coinSound.play();
         this.pot.potRadius += 1;
         console.log('Bonus' + this.pot.potRadius);
         bonus.active = false;
