@@ -38,9 +38,9 @@ class Pot {
 
       setTimeout(() => {
         this.flamesActive = true;
+        explodeSound.play();
+        this.game.collisionPot();
         setTimeout(() => {
-          explodeSound.play();
-          this.game.collisionPot();
           this.active = false;
           this.flamesActive = false;
         }, 300);
