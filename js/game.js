@@ -52,6 +52,7 @@ class Game {
     this.win = false;
     this.reset();
     this.setKeyBindings();
+    playSound.play()
     this.context.translate(50, 50);
     this.tile = 60;
     this.rows = 13;
